@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Loader2 } from "lucide-react";
 import "./Chatbot.css";
 
+// ✅ YOUR BACKEND URL
+const API_URL = "https://disaster-project-oyfj.onrender.com";
+
 function Chatbot() {
   const [messages, setMessages] = useState([
     {
@@ -36,30 +39,34 @@ function Chatbot() {
     setError("");
 
     try {
-      // 🔥 STEP 1: Wake up Render server (VERY IMPORTANT)
-      await fetch("https://disaster-project-oyfj.onrender.com/");
+      // ✅ Wake up backend (Render sleep fix)
+      await fetch(API_URL);
 
-      // 🔥 STEP 2: Actual API call
-      const res = await fetch("https://disaster-project-oyfj.onrender.com/chat", {
+      // ✅ API CALL
+      const res = await fetch(`${API_URL}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: updatedMessages.map((m) => ({
-            role: m.role,
-            content: m.content,
-          })),
+          messages: updatedMessages,
         }),
       });
 
-      const data = await res.json();
-      console.log("FULL DATA:", data);
+      // ❌ If server not reachable
+      if (!res) {
+        throw new Error("No response from server");
+      }
 
+      const data = await res.json();
+
+      // ❌ If API error
       if (!res.ok) {
+        console.log("API ERROR:", data);
         throw new Error("API Error");
       }
 
+      // ✅ Extract reply safely
       const reply =
         data?.choices?.[0]?.message?.content ||
         "⚠️ No response from AI";
@@ -73,7 +80,10 @@ function Chatbot() {
       ]);
     } catch (err) {
       console.log("ERROR:", err);
-      setError("❌ Server sleep ya network issue — 2 sec baad retry karo");
+
+      setError(
+        "❌ Server connect nahi ho pa raha (Render sleep / network issue) — 5 sec baad retry karo"
+      );
     } finally {
       setLoading(false);
     }

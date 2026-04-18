@@ -1,0 +1,99 @@
+/* Disaster Info page styling */
+
+.disaster-info-page {
+  min-height: 100vh;
+}
+
+/* Page header */
+.page-header {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, #2d4a6f 100%);
+  color: var(--white);
+  padding: var(--spacing-2xl) 0;
+}
+
+.header-content {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.header-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--primary-red);
+  margin-bottom: var(--spacing-md);
+}
+
+.header-content h1 {
+  color: var(--white);
+  margin-bottom: var(--spacing-md);
+}
+
+.header-content p {
+  color: var(--gray-300);
+  font-size: 1.1rem;
+}
+
+/* Disasters grid */
+.disasters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+/* Preparedness section */
+.preparedness-section {
+  background: var(--gray-100);
+}
+
+.preparedness-section h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.tip-card {
+  background: var(--white);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  padding-top: var(--spacing-2xl);
+}
+
+.tip-number {
+  position: absolute;
+  top: -15px;
+  left: var(--spacing-lg);
+  width: 36px;
+  height: 36px;
+  background: var(--primary-blue);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.tip-card h4 {
+  margin-bottom: var(--spacing-sm);
+  color: var(--gray-800);
+}
+
+.tip-card p {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .disasters-grid {
+    grid-template-columns: 1fr;
+  }
+}

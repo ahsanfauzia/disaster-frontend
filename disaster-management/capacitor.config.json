@@ -1,0 +1,5 @@
+{
+  "appId": "com.yourname.disaster",
+  "appName": "disasterApp",
+  "webDir": "dist"
+}

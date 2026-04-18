@@ -1,0 +1,25 @@
+/* Chatbot page styling */
+
+.chatbot-page {
+  min-height: 100vh;
+}
+
+.chatbot-section {
+  padding-top: var(--spacing-lg);
+}
+
+.api-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--light-blue);
+  color: var(--primary-blue);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  font-size: 0.875rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -9,7 +9,6 @@ function Chatbot() {
       content: "Hello! I am your Disaster Management Assistant 🤖",
     },
   ]);
-  console.log("NEW VERSION LOADED");
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -37,6 +36,10 @@ function Chatbot() {
     setError("");
 
     try {
+      // 🔥 STEP 1: Wake up Render server (VERY IMPORTANT)
+      await fetch("https://disaster-project-oyfj.onrender.com/");
+
+      // 🔥 STEP 2: Actual API call
       const res = await fetch("https://disaster-project-oyfj.onrender.com/chat", {
         method: "POST",
         headers: {
@@ -51,20 +54,14 @@ function Chatbot() {
       });
 
       const data = await res.json();
-
       console.log("FULL DATA:", data);
 
       if (!res.ok) {
-        const text = JSON.stringify(data);
-        console.log("ERROR RESPONSE:", text);
         throw new Error("API Error");
       }
 
-      // ✅ SAFE RESPONSE HANDLING
       const reply =
         data?.choices?.[0]?.message?.content ||
-        data?.choices?.[0]?.text ||
-        data?.message ||
         "⚠️ No response from AI";
 
       setMessages((prev) => [
@@ -76,7 +73,7 @@ function Chatbot() {
       ]);
     } catch (err) {
       console.log("ERROR:", err);
-      setError("❌ Server slow hai ya API issue hai (wait & retry)");
+      setError("❌ Server sleep ya network issue — 2 sec baad retry karo");
     } finally {
       setLoading(false);
     }

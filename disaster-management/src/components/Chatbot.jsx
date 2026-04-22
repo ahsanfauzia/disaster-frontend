@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Loader2 } from "lucide-react";
-
-// ✅ FIX: correct path (adjust if needed)
 import "../components/Chatbot.css";
 
 const API_URL = "https://disaster-backend-qvgd.onrender.com";
@@ -20,7 +18,6 @@ function Chatbot() {
 
   const endRef = useRef(null);
 
-  // auto scroll
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -41,7 +38,7 @@ function Chatbot() {
     setError("");
 
     try {
-      // wake backend (Render sleep fix)
+      // Wake backend (Render cold start)
       await fetch(API_URL);
 
       const res = await fetch(`${API_URL}/chat`, {
@@ -54,29 +51,36 @@ function Chatbot() {
         }),
       });
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error("Invalid server response");
+      }
 
       console.log("RESPONSE:", data);
 
       if (!res.ok) {
-        throw new Error(data?.error || "API Error");
+        console.log("API ERROR:", data);
+        throw new Error(
+          typeof data?.error === "string"
+            ? data.error
+            : data?.error?.message || "Server error"
+        );
       }
 
       const reply =
         data?.choices?.[0]?.message?.content ||
         data?.message ||
-        "⚠️ No response from AI";
+        "No response received from AI.";
 
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: reply,
-        },
+        { role: "assistant", content: reply },
       ]);
     } catch (err) {
       console.log("ERROR:", err);
-      setError("❌ Server issue ya API slow hai (10–20 sec wait karo)");
+      setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -84,14 +88,11 @@ function Chatbot() {
 
   return (
     <div className="chatbot">
-
-      {/* HEADER */}
       <div className="chat-header">
         <Bot />
         <h3>Disaster Assistant</h3>
       </div>
 
-      {/* MESSAGES */}
       <div className="messages-container">
         {messages.map((m, i) => (
           <div key={i} className={`message ${m.role}`}>
@@ -114,7 +115,6 @@ function Chatbot() {
         <div ref={endRef}></div>
       </div>
 
-      {/* INPUT */}
       <div className="chat-input-area">
         <input
           value={input}
@@ -122,7 +122,6 @@ function Chatbot() {
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder="Ask about disasters..."
         />
-
         <button onClick={handleSend} disabled={loading}>
           <Send size={18} />
         </button>

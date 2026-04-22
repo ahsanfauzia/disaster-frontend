@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Send, Bot, User, Loader2 } from "lucide-react";
 import "../components/Chatbot.css";
 
-const API_URL = "https://disaster-backend-qvgd.onrender.com";
+// ✅ UPDATED BACKEND URL
+const API_URL = "https://disaster-backend-616z.onrender.com";
 
 function Chatbot() {
   const [messages, setMessages] = useState([
@@ -18,6 +19,7 @@ function Chatbot() {
 
   const endRef = useRef(null);
 
+  // Auto scroll
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -88,16 +90,22 @@ function Chatbot() {
 
   return (
     <div className="chatbot">
+      {/* Header */}
       <div className="chat-header">
         <Bot />
         <h3>Disaster Assistant</h3>
       </div>
 
+      {/* Messages */}
       <div className="messages-container">
         {messages.map((m, i) => (
           <div key={i} className={`message ${m.role}`}>
             <div className="message-avatar">
-              {m.role === "assistant" ? <Bot size={18} /> : <User size={18} />}
+              {m.role === "assistant" ? (
+                <Bot size={18} />
+              ) : (
+                <User size={18} />
+              )}
             </div>
             <div className="message-content">{m.content}</div>
           </div>
@@ -115,6 +123,7 @@ function Chatbot() {
         <div ref={endRef}></div>
       </div>
 
+      {/* Input */}
       <div className="chat-input-area">
         <input
           value={input}
@@ -122,6 +131,7 @@ function Chatbot() {
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder="Ask about disasters..."
         />
+
         <button onClick={handleSend} disabled={loading}>
           <Send size={18} />
         </button>

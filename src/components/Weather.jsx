@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { MapPin, Thermometer, Wind } from "lucide-react";
 
+// ✅ YOUR BACKEND URL
+const API_URL = "https://disaster-backend-616z.onrender.com";
+
 function Weather() {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("Fetching location...");
@@ -13,9 +16,9 @@ function Weather() {
 
   const fetchWeather = async (lat, lon, cityName = "Your Location") => {
     try {
-      // 🌦️ Weather API
+      // 🔥 FIXED: call YOUR backend (no CORS issue)
       const res = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+        `${API_URL}/weather?lat=${lat}&lon=${lon}`
       );
       const data = await res.json();
 
@@ -23,7 +26,7 @@ function Weather() {
         setWeather(data.current_weather);
       }
 
-      // 🏙️ City API (no CORS)
+      // 🏙️ City API (works fine)
       const cityRes = await fetch(
         `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
       );
@@ -105,16 +108,16 @@ function Weather() {
 
 const styles = {
   card: {
-  width: "100%",
-  maxWidth: "500px",   // 🔥 bada card
-  margin: "40px auto",
-  padding: "30px",
-  borderRadius: "20px",
-  background: "linear-gradient(135deg, #3b82f6, #1e3a8a)",
-  color: "white",
-  boxShadow: "0 15px 30px rgba(0,0,0,0.3)",
-  textAlign: "center",
-},
+    width: "100%",
+    maxWidth: "500px",
+    margin: "40px auto",
+    padding: "30px",
+    borderRadius: "20px",
+    background: "linear-gradient(135deg, #3b82f6, #1e3a8a)",
+    color: "white",
+    boxShadow: "0 15px 30px rgba(0,0,0,0.3)",
+    textAlign: "center",
+  },
   title: {
     marginBottom: "10px",
   },

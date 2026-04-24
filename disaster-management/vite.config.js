@@ -3,13 +3,17 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  base: '/', // 🔥 important for Vercel
+  base: '/',
 
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
+
+      devOptions: {
+        enabled: true 
+      },
 
       manifest: {
         name: 'Disaster Management System',
@@ -33,7 +37,6 @@ export default defineConfig({
         ]
       },
 
-      // 🔥 THIS FIXES MOBILE ISSUE
       workbox: {
         cleanupOutdatedCaches: true,
         clientsClaim: true,

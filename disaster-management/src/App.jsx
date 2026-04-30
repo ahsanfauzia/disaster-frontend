@@ -8,10 +8,40 @@ import ChatbotPage from './pages/ChatbotPage.jsx'
 import About from './pages/About.jsx'
 import './App.css'
 
+// 🔥 INSTALL FUNCTION
+function installApp() {
+  if (window.deferredPrompt) {
+    window.deferredPrompt.prompt()
+    window.deferredPrompt.userChoice.then(() => {
+      window.deferredPrompt = null
+    })
+  } else {
+    alert("Install not ready yet, try again")
+  }
+}
+
 function App() {
   return (
     <div className="app">
       <Navbar />
+
+      {/* 🔥 INSTALL BUTTON */}
+      <div style={{ textAlign: "center", margin: "10px" }}>
+        <button
+          onClick={installApp}
+          style={{
+            padding: "10px 20px",
+            background: "#facc15",
+            color: "#000",
+            border: "none",
+            borderRadius: "8px",
+            fontWeight: "bold",
+            cursor: "pointer"
+          }}
+        >
+           Install App
+        </button>
+      </div>
 
       <main className="main-content">
         <Routes>

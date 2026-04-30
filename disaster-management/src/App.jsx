@@ -23,23 +23,29 @@ function installApp() {
 function App() {
   return (
     <div className="app">
+
+      {/* 🔴 TEST BOX (confirm render ho raha ya nahi) */}
+      <div style={{ background: "red", padding: "20px", textAlign: "center" }}>
+        <h2>TEST BUTTON</h2>
+      </div>
+
       <Navbar />
 
-      {/* 🔥 INSTALL BUTTON */}
+      {/* 📲 INSTALL BUTTON */}
       <div style={{ textAlign: "center", margin: "10px" }}>
         <button
           onClick={installApp}
           style={{
             padding: "10px 20px",
-            background: "#facc15",
-            color: "#000",
+            background: "yellow",
+            color: "black",
             border: "none",
             borderRadius: "8px",
             fontWeight: "bold",
             cursor: "pointer"
           }}
         >
-           Install App
+          📲 Install App
         </button>
       </div>
 

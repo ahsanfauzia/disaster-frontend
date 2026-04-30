@@ -8,27 +8,28 @@ import ChatbotPage from './pages/ChatbotPage.jsx'
 import About from './pages/About.jsx'
 import './App.css'
 
-// 🔥 INSTALL FUNCTION
+// ✅ INSTALL FUNCTION (FINAL)
 function installApp() {
   if (window.deferredPrompt) {
     window.deferredPrompt.prompt()
-    window.deferredPrompt.userChoice.then(() => {
+
+    window.deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted install')
+      } else {
+        console.log('User dismissed install')
+      }
       window.deferredPrompt = null
     })
   } else {
-    alert("Install not ready yet, try again")
+    // 🔥 fallback (always works)
+    alert("👉 Install manually:\n\nTap 3 dots (⋮) → 'Install App' or 'Add to Home Screen'")
   }
 }
 
 function App() {
   return (
     <div className="app">
-
-      {/* 🔴 TEST BOX (confirm render ho raha ya nahi) */}
-      <div style={{ background: "red", padding: "20px", textAlign: "center" }}>
-        <h2>TEST BUTTON</h2>
-      </div>
-
       <Navbar />
 
       {/* 📲 INSTALL BUTTON */}
@@ -37,8 +38,8 @@ function App() {
           onClick={installApp}
           style={{
             padding: "10px 20px",
-            background: "yellow",
-            color: "black",
+            background: "#facc15",
+            color: "#000",
             border: "none",
             borderRadius: "8px",
             fontWeight: "bold",
